@@ -3,6 +3,6 @@
     <style name="app_header">
         <item name="android:textSize">24sp</item>
         <item name="android:letterSpacing">0.02</item>
-        <item name="android:textColor">#525464</item>
+        <item name="android:textColor">@color/grey_main</item>
     </style>
 </resources>
