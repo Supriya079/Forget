@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Forget">
         <activity
-            android:name=".form"
+            android:name=".Form"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
