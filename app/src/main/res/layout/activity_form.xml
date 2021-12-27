@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Form">
+
+    <TextView
+        android:id="@+id/categories"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:gravity="center_horizontal|top"
+        android:lineSpacingExtra="1sp"
+        android:text="Fill and Forget"
+        android:fontFamily="@font/gilroysemibold"
+        android:textAppearance="@style/app_header"
+        android:translationY="-0.45sp"
+        android:layout_marginTop="26dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgform"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="15dp"
+        android:layout_height="17dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/categories"
+        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.045" />
+
+    <View
+        android:layout_width="24dp"
+        android:layout_height="10dp"
+        android:background="@drawable/ic_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.776"
+        app:layout_constraintStart_toEndOf="@+id/categories"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.055" />
+
+    <ImageView
+        android:id="@+id/imgform"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/img"
+        app:layout_constraintBottom_toTopOf="@+id/categorylist"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categories"
+        app:layout_constraintVertical_bias="0.029" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/categorylist"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgform">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toStartOf="@+id/v1"
+                android:backgroundTint="@android:color/transparent"
+                android:fontFamily="@font/gilroysemibold"
+                android:hint="Category" />
+
+            <View
+                android:id="@+id/v1"
+                android:layout_width="60dp"
+                android:layout_height="match_parent"
+                android:background="#FFB19D"
+                android:layout_alignParentEnd="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="22dp"
+                android:src="@drawable/ic_noun_check" />
+
+        </RelativeLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+    <FrameLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categorylist" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Skip"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/gilroysemibold"
+        android:textColor="#838391"
+        android:backgroundTint="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="150dp"
+        android:layout_height="60dp"
+        android:text="Done"
+        android:textColor="#ffffff"
+        android:layout_marginBottom="10dp"
+        android:backgroundTint="@color/teal"
+        android:fontFamily="@font/gilroysemibold"
+        app:layout_constraintTop_toBottomOf="@+id/fragment_container"
+        app:layout_constraintStart_toEndOf="@id/button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
