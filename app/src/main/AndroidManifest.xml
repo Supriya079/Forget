@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Forget">
         <activity
+            android:name=".form"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
