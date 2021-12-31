@@ -13,7 +13,7 @@
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="1sp"
         android:text="@string/app_header"
-        android:fontFamily="@font/gilroysemibold"
+        android:fontFamily="@font/gilroy_semibold"
         android:textAppearance="@style/app_header"
         android:translationY="-0.45sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -27,7 +27,7 @@
         android:layout_width="15dp"
         android:layout_height="17dp"
         android:layout_marginTop="8.35dp"
-        android:background="@drawable/ic_back"
+        android:background="@drawable/ic_back_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/categories"
         app:layout_constraintHorizontal_bias="0.198"
@@ -105,6 +105,7 @@
                 android:orientation="vertical">
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/billCard"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_margin="20dp"
@@ -133,7 +134,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="90dp"
-                            android:fontFamily="@font/gilroysemibold"
+                            android:fontFamily="@font/gilroy_semibold"
                             android:text="Bills"
                             android:textSize="18sp" />
 
@@ -145,7 +146,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="8.35dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_next" />
+                            android:background="@drawable/ic_path" />
 
                     </RelativeLayout>
 
@@ -153,6 +154,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/medicalReportCard"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_margin="20dp"
@@ -181,7 +183,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="90dp"
-                            android:fontFamily="@font/gilroysemibold"
+                            android:fontFamily="@font/gilroy_semibold"
                             android:text="Medical Reports"
                             android:textSize="18sp" />
 
@@ -193,7 +195,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="8.35dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_next" />
+                            android:background="@drawable/ic_path" />
 
                     </RelativeLayout>
 
@@ -201,6 +203,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/objectsCard"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_margin="20dp"
@@ -229,7 +232,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="90dp"
-                            android:fontFamily="@font/gilroysemibold"
+                            android:fontFamily="@font/gilroy_semibold"
                             android:text="Objects"
                             android:textSize="18sp" />
 
@@ -241,13 +244,14 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="8.35dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_next" />
+                            android:background="@drawable/ic_path" />
 
                     </RelativeLayout>
 
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/documentsCard"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_margin="20dp"
@@ -276,7 +280,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="90dp"
-                            android:fontFamily="@font/gilroysemibold"
+                            android:fontFamily="@font/gilroy_semibold"
                             android:text="Documents"
                             android:textSize="18sp" />
 
@@ -288,7 +292,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="8.35dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_next" />
+                            android:background="@drawable/ic_path" />
 
                     </RelativeLayout>
 
@@ -296,6 +300,7 @@
                 </androidx.cardview.widget.CardView>
 
                 <androidx.cardview.widget.CardView
+                    android:id="@+id/myItemCard"
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
                     android:layout_margin="20dp"
@@ -324,7 +329,7 @@
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
                             android:layout_marginStart="90dp"
-                            android:fontFamily="@font/gilroysemibold"
+                            android:fontFamily="@font/gilroy_semibold"
                             android:text="My Items"
                             android:textSize="18sp" />
 
@@ -336,7 +341,7 @@
                             android:layout_centerVertical="true"
                             android:layout_marginTop="8.35dp"
                             android:layout_marginEnd="20dp"
-                            android:background="@drawable/ic_next" />
+                            android:background="@drawable/ic_path" />
 
                     </RelativeLayout>
 

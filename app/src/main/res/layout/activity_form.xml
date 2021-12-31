@@ -14,7 +14,7 @@
         android:gravity="center_horizontal|top"
         android:lineSpacingExtra="1sp"
         android:text="Fill and Forget"
-        android:fontFamily="@font/gilroysemibold"
+        android:fontFamily="@font/gilroy_semibold"
         android:textAppearance="@style/app_header"
         android:translationY="-0.45sp"
         android:layout_marginTop="26dp"
@@ -25,17 +25,17 @@
         app:layout_constraintVertical_bias="0.045" />
 
     <View
-        android:id="@+id/view"
+        android:id="@+id/viewFormBack"
         android:layout_width="15dp"
         android:layout_height="17dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/ic_back"
+        android:background="@drawable/ic_back_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/categories"
-        app:layout_constraintHorizontal_bias="0.198"
+        app:layout_constraintHorizontal_bias="0.148"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.035" />
 
     <View
         android:layout_width="24dp"
@@ -43,10 +43,10 @@
         android:background="@drawable/ic_menu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.776"
+        app:layout_constraintHorizontal_bias="0.795"
         app:layout_constraintStart_toEndOf="@+id/categories"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
+        app:layout_constraintVertical_bias="0.045" />
 
     <ImageView
         android:id="@+id/imgform"
@@ -79,7 +79,7 @@
                 android:layout_height="match_parent"
                 android:layout_toStartOf="@+id/v1"
                 android:backgroundTint="@android:color/transparent"
-                android:fontFamily="@font/gilroysemibold"
+                android:fontFamily="@font/gilroy_semibold"
                 android:hint="Category" />
 
             <View
@@ -118,7 +118,7 @@
         android:layout_height="60dp"
         android:text="Skip"
         android:layout_marginBottom="10dp"
-        android:fontFamily="@font/gilroysemibold"
+        android:fontFamily="@font/gilroy_semibold"
         android:textColor="#838391"
         android:backgroundTint="@android:color/white"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container"
@@ -134,7 +134,7 @@
         android:textColor="#ffffff"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/teal"
-        android:fontFamily="@font/gilroysemibold"
+        android:fontFamily="@font/gilroy_semibold"
         app:layout_constraintTop_toBottomOf="@+id/fragment_container"
         app:layout_constraintStart_toEndOf="@id/button"
         app:layout_constraintBottom_toBottomOf="parent"
