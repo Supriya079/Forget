@@ -29,7 +29,7 @@
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/v1"
                     android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="@font/gilroysemibold"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:hint="Object Name" />
 
                 <View
@@ -70,7 +70,7 @@
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/v2"
                     android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="@font/gilroysemibold"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:hint="Description" />
 
                 <View
@@ -110,7 +110,7 @@
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/v3"
                     android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="@font/gilroysemibold"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:hint="Location" />
 
                 <View
@@ -150,7 +150,7 @@
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/v4"
                     android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="@font/gilroysemibold"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:hint="Lorem ipsum" />
 
                 <View
@@ -190,7 +190,7 @@
                     android:layout_height="match_parent"
                     android:layout_toStartOf="@+id/v5"
                     android:backgroundTint="@android:color/transparent"
-                    android:fontFamily="@font/gilroysemibold"
+                    android:fontFamily="@font/gilroy_semibold"
                     android:hint="Lorem ipsum" />
 
                 <View
