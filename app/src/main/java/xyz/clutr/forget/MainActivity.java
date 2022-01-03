@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton floatingActionButton;
     CardView cardBill,cardMedicalReport,cardObjects,cardDocuments,cardViewMyItem;
+    View viewDashboardBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,15 @@ public class MainActivity extends AppCompatActivity {
         cardMedicalReport = findViewById(R.id.medicalReportCard);
         cardObjects = findViewById(R.id.objectsCard);
         cardDocuments = findViewById(R.id.documentsCard);
+        viewDashboardBack = findViewById(R.id.viewDashboardBack);
+
+        cardBill.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getApplicationContext(), Bills.class);
+                startActivity(i);
+            }
+        });
 
         cardDocuments.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,14 +61,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        cardBill.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MyStuff.class);
-                startActivity(i);
-            }
-        });
-
         cardViewMyItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,5 +77,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        viewDashboardBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 }

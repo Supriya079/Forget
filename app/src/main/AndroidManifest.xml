@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Forget">
         <activity
+            android:name=".Bills"
+            android:exported="false" />
+        <activity
             android:name=".DetailsActivity"
             android:exported="false" />
         <activity
@@ -17,6 +20,7 @@
             android:exported="false" />
         <activity
             android:name=".Form"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
