@@ -6,56 +6,65 @@
     android:layout_height="match_parent"
     tools:context=".DetailsActivity">
 
-    <TextView
-        android:id="@+id/categories"
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-        android:gravity="center_horizontal|top"
-        android:lineSpacingExtra="1sp"
-        android:text="Painting Brush"
-        android:fontFamily="@font/gilroy_semibold"
-        android:textAppearance="@style/app_header"
-        android:translationY="-0.45sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@id/image_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <View
-        android:id="@+id/viewBackDetails"
-        android:layout_width="15dp"
-        android:layout_height="17dp"
-        android:layout_marginTop="8.35dp"
-        android:background="@drawable/ic_back_arrow"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/categories"
-        app:layout_constraintHorizontal_bias="0.198"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        <View
+            android:id="@+id/viewBackDetails"
+            android:layout_width="15dp"
+            android:layout_height="17dp"
+            android:background="@drawable/ic_back_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <View
-        android:layout_width="24dp"
-        android:layout_height="10dp"
-        android:background="@drawable/ic_menu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.776"
-        app:layout_constraintStart_toEndOf="@+id/categories"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.055" />
+        <TextView
+            android:id="@+id/categories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/gilroy_semibold"
+            android:gravity="center_horizontal|top"
+            android:lineSpacingExtra="1sp"
+            android:text="@string/app_header"
+            android:textSize="18sp"
+            android:textAppearance="@style/app_header"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/view2"
+            app:layout_constraintStart_toEndOf="@id/viewBackDetails"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="24dp"
+            android:layout_height="10dp"
+            android:background="@drawable/ic_menu"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/image_layout"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:orientation="horizontal"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/categories">
+        app:layout_constraintTop_toBottomOf="@+id/constraint1">
 
         <ImageView
             android:id="@+id/detailImage"
@@ -102,67 +111,74 @@
 
     </LinearLayout>
 
-
-    <ScrollView
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image_layout">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="20dp"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_margin="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/detailHeader"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/ubuntu"
-                android:text="Details"
-                android:textColor="@color/black"
-                android:textSize="24dp"
-                />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/details_txt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:fontFamily="@font/gilroy_medium"
-                android:gravity="left"
-                android:lines="4"
-                android:maxLines="5"
-                android:layout_marginTop="10dp"
-                android:singleLine="false"
-                android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ultricies imperdiet id scelerisque purus sed nulla. Convallis nulla velit aliquet penatibus cursus lectus. Adipiscing viverra praesent volutpat sit id "
-                />
+                <TextView
+                    android:id="@+id/detailHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/ubuntu"
+                    android:text="Details"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
 
-            <TextView
-                android:id="@+id/details_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/details_date"
-                android:textColor="@color/peach"
-                android:layout_marginTop="10dp"
-                android:textSize="16sp"
-                />
+                <TextView
+                    android:id="@+id/details_txt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:ellipsize="end"
+                    android:fontFamily="@font/gilroy_medium"
+                    android:gravity="left"
+                    android:lines="4"
+                    android:textSize="16sp"
+                    android:maxLines="5"
+                    android:singleLine="false"
+                    android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ultricies imperdiet id scelerisque purus sed nulla. Convallis nulla velit aliquet penatibus cursus lectus. Adipiscing viverra praesent volutpat sit id " />
 
-            <TextView
-                android:id="@+id/details_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/details_location"
-                android:textColor="@color/peach"
-                android:textSize="16sp"
-                 />
+                <TextView
+                    android:id="@+id/details_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/details_date"
+                    android:textColor="@color/peach"
+                    android:textSize="16sp" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/details_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/details_location"
+                    android:textColor="@color/peach"
+                    android:textSize="16sp" />
 
-    </ScrollView>
+            </LinearLayout>
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
     <LinearLayout
         android:id="@+id/btn_layout"
@@ -184,6 +200,7 @@
             android:backgroundTint="@android:color/white"
             android:fontFamily="@font/gilroy_semibold"
             android:text="Download"
+            android:textSize="16sp"
             android:textColor="#838391"
             android:layout_margin="10dp"
             />
@@ -196,6 +213,7 @@
             android:backgroundTint="@color/teal"
             android:fontFamily="@font/gilroy_semibold"
             android:text="Done"
+            android:textSize="16sp"
             android:layout_margin="10dp"
             android:textColor="#ffffff" />
 

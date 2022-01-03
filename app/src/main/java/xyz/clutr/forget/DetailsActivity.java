@@ -39,8 +39,7 @@ public class DetailsActivity extends AppCompatActivity {
         viewBackDetails.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MyStuff.class);
-                startActivity(i);
+                finish();
             }
         });
 
