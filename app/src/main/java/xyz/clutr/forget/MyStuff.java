@@ -75,7 +75,6 @@ public class MyStuff extends AppCompatActivity {
         recyclerViewStuff.setLayoutManager(gridLayoutManager);
         recyclerViewStuff.setAdapter(recyclerAdapter);
 
-
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
