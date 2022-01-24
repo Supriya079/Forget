@@ -95,8 +95,8 @@
                     android:layout_marginStart="20dp"
                     android:layout_toEndOf="@+id/searchicon"
                     android:background="@null"
-                    android:textSize="16sp"
-                    android:hint="Search by category" />
+                    android:hint="Search by category"
+                    android:textSize="16sp" />
 
             </RelativeLayout>
 
