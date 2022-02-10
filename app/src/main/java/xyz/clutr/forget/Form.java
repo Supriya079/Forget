@@ -7,10 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
@@ -19,6 +16,7 @@ import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,33 +29,44 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
 
-import xyz.clutr.forget.Room.BillDAO;
-import xyz.clutr.forget.Room.BillDB;
+import xyz.clutr.forget.Room.DataDAO;
+import xyz.clutr.forget.Room.DocumentEntity;
+import xyz.clutr.forget.Room.ForgetDB;
 import xyz.clutr.forget.Room.BillEntity;
+
+/*
+references used for image events:
+https://developer.android.com/training/camera/photobasics
+Image stackoverflow solutions
+- getImgPath camera
+https://stackoverflow.com/questions/15432592/get-file-path-of-image-on-android
+- saveImgToGallery
+https://stackoverflow.com/questions/12967046/how-do-i-save-an-image-in-external-storage-gallery-in-android
+*/
 
 public class Form extends AppCompatActivity {
 
     View viewBackForm;
     AutoCompleteTextView autoCompleteTextView;
-    EditText billObjectNameEdittext,billDescriptionEdittext,billLocationEdittext,billImageEdittext;
+    EditText objectNameEdittext, descriptionEdittext, locationEdittext, mediaEdittext;
     ArrayAdapter<String> adapter;
     Button doneBtn;
     String[] strings={"Bills & Invoice","Medical Report","Objects","Documents","My Items"};
-    BillDAO billDAO;
+    DataDAO dao;
     Dialog dialogM;
-    Uri uri = null,intentCameraUri=null;
-    String galleryImagePath;
+    Uri uri = null,intentCameraUri=null,intentFileUri=null;
+    File source,destination;
+    String sourceFilePath;
 
     public static final String TIMESTAMP_DATE_FORMAT = "dd MMM yyyy hh:mm:ss a";
     private static final int CAMERA = 9;
     private static final int GALLERY = 7;
+    private static final int FILES = 97;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,41 +76,41 @@ public class Form extends AppCompatActivity {
         //view binding with id's
         viewBackForm = findViewById(R.id.viewFormBack);
         autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
-        billObjectNameEdittext = findViewById(R.id.editTextBillObjectName);
-        billDescriptionEdittext = findViewById(R.id.editTextBillDescription);
-        billLocationEdittext = findViewById(R.id.editTextBillLocationDate);
-        billImageEdittext =findViewById(R.id.editTextBillImage);
+        objectNameEdittext = findViewById(R.id.editTextBillObjectName);
+        descriptionEdittext = findViewById(R.id.editTextBillDescription);
+        locationEdittext = findViewById(R.id.editTextBillLocationDate);
+        mediaEdittext =findViewById(R.id.editTextBillImage);
 
         adapter= new ArrayAdapter<>(this,android.R.layout.simple_list_item_1,strings);
         autoCompleteTextView.setThreshold(1);
         autoCompleteTextView.setAdapter(adapter);
         doneBtn = findViewById(R.id.button);
 
-        billDAO = BillDB.getBillDBInstance(getApplicationContext()).billDAO();
+        dao = ForgetDB.getBillDBInstance(getApplicationContext()).dataDAO();
 
         doneBtn.setOnClickListener(v -> {
             if(autoCompleteTextView.getText().toString().trim().equals(strings[0])){
                 //Bills
-                if (billObjectNameEdittext.getText().toString().isEmpty() || billDescriptionEdittext.getText().toString().isEmpty()
-                        || billLocationEdittext.getText().toString().isEmpty() || billImageEdittext.getHint().toString().isEmpty()) {
+                if (objectNameEdittext.getText().toString().isEmpty() || descriptionEdittext.getText().toString().isEmpty()
+                        || locationEdittext.getText().toString().isEmpty() || mediaEdittext.getHint().toString().isEmpty()) {
                     Toast.makeText(Form.this,
                             "Data missing",
                             Toast.LENGTH_SHORT).show();
                 }else {
                     BillEntity billEntity = new BillEntity();
                     billEntity.setCategory(autoCompleteTextView.getText().toString());
-                    billEntity.setObject_Name(billObjectNameEdittext.getText().toString());
-                    billEntity.setDescription(billDescriptionEdittext.getText().toString());
-                    billEntity.setLocation(billLocationEdittext.getText().toString());
-                    billImageEdittext.setHintTextColor(Color.BLACK);
-                    billEntity.setImagePath(billImageEdittext.getHint().toString());
+                    billEntity.setObject_Name(objectNameEdittext.getText().toString());
+                    billEntity.setDescription(descriptionEdittext.getText().toString());
+                    billEntity.setLocation(locationEdittext.getText().toString());
+                    mediaEdittext.setHintTextColor(Color.BLACK);
+                    billEntity.setImagePath(mediaEdittext.getHint().toString());
                     try {
                         @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_DATE_FORMAT);
                         billEntity.setDate(sdf.parse(sdf.format(new Date())));
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    billDAO.insertBill(billEntity);
+                    dao.insertBill(billEntity);
 
                     Toast.makeText(Form.this, "Data Added in: "+(strings[0]), Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(Form.this, Bills.class);
@@ -119,9 +128,32 @@ public class Form extends AppCompatActivity {
                 startActivity(i);
             }
             else if (autoCompleteTextView.getText().toString().trim().equals(strings[3])){
-                Toast.makeText(Form.this, "Data Added in: "+(strings[3]), Toast.LENGTH_SHORT).show();
-                Intent i = new Intent(Form.this, Bills.class);
-                startActivity(i);
+                //Documents
+                if (objectNameEdittext.getText().toString().isEmpty() || descriptionEdittext.getText().toString().isEmpty()
+                        || locationEdittext.getText().toString().isEmpty() || mediaEdittext.getHint().toString().isEmpty()) {
+                    Toast.makeText(Form.this,
+                            "Data missing",
+                            Toast.LENGTH_SHORT).show();
+                }else {
+                    DocumentEntity documentEntity = new DocumentEntity();
+                    documentEntity.setCategory(autoCompleteTextView.getText().toString());
+                    documentEntity.setObject_Name(objectNameEdittext.getText().toString());
+                    documentEntity.setDescription(descriptionEdittext.getText().toString());
+                    documentEntity.setLocation(locationEdittext.getText().toString());
+                    mediaEdittext.setHintTextColor(Color.BLACK);
+                    documentEntity.setDocumentPath(mediaEdittext.getHint().toString());
+                    try {
+                        @SuppressLint("SimpleDateFormat") SimpleDateFormat sdf = new SimpleDateFormat(TIMESTAMP_DATE_FORMAT);
+                        documentEntity.setDate(sdf.parse(sdf.format(new Date())));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    dao.insertDocument(documentEntity);
+
+                    Toast.makeText(Form.this, "Data Added in: "+(strings[0]), Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(Form.this, Documents.class);
+                    startActivity(i);
+                }
             }
             else if (autoCompleteTextView.getText().toString().trim().equals(strings[4])){
                 Toast.makeText(Form.this, "Data Added in: "+(strings[4]), Toast.LENGTH_SHORT).show();
@@ -167,7 +199,7 @@ public class Form extends AppCompatActivity {
             dialogM.dismiss();
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             if (intent.resolveActivity(getPackageManager())!= null){
-                Uri imagePath = createCameraImage();
+                Uri imagePath = AccessStorage.createCameraImage(this);
                 if (imagePath != null){
                     intent.putExtra(MediaStore.EXTRA_OUTPUT,imagePath);
                     startActivityForResult(intent,CAMERA);
@@ -188,8 +220,11 @@ public class Form extends AppCompatActivity {
         });
 
         files.setOnClickListener(view1 -> {
-            Toast.makeText(Form.this, "files", Toast.LENGTH_SHORT).show();
             dialogM.dismiss();
+            Intent chooseFile = new Intent(Intent.ACTION_GET_CONTENT);
+            chooseFile.addCategory(Intent.CATEGORY_OPENABLE);
+            chooseFile.setType("*/*");
+            startActivityForResult(Intent.createChooser(chooseFile, "Choose a file"),FILES);
         });
 
     }
@@ -202,90 +237,106 @@ public class Form extends AppCompatActivity {
             return;
         }
         if (requestCode == CAMERA && resultCode == Activity.RESULT_OK ){
-            getImgPath();// it will return the Capture image path
-            Toast.makeText(Form.this, "Picture Selected Camera", Toast.LENGTH_SHORT).show();
+            String camerapath = AccessStorage.getImgPath(intentCameraUri,this);// it will return the Capture image path
+            mediaEdittext.setHint(camerapath);
+            Log.d("CP",camerapath);
+            Toast.makeText(Form.this, "Picture Selected from Camera", Toast.LENGTH_SHORT).show();
         }
         else if (requestCode == GALLERY && resultCode == Activity.RESULT_OK ){
             assert data != null;
             uri = data.getData();
-//          imageDash.setImageURI(gUri);
             Toast.makeText(Form.this, "Picture Selected from Gallery", Toast.LENGTH_SHORT).show();
             try {
                 Bitmap bitDemo = MediaStore.Images.Media.getBitmap(this.getContentResolver(), uri);
-                saveImageToGallery(bitDemo);
+                String gallPath = AccessStorage.saveImageToGallery(bitDemo,this);
+                mediaEdittext.setHint(gallPath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }else if (requestCode == FILES && resultCode == Activity.RESULT_OK){
+            Uri content_describer = data.getData();
+            String src = content_describer.getPath();
+            source = new File(src);
+            Log.d("src is ", source.toString());
+            String filename = content_describer.getLastPathSegment();
+            Log.d("FileName is ",filename);
+            destination = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ filename);
+            Log.d("Destination is ", destination.toString());
+            intentFileUri = Uri.parse(filename);
+            sourceFilePath = AccessStorage.getSourceFilePath(this,intentFileUri);
+            Log.d("getP",""+sourceFilePath);
+            String filePath = AccessStorage.saveFileToStorage(this,sourceFilePath);
+            mediaEdittext.setHint(filePath);
         }
         else {
             Toast.makeText(Form.this, "Picture Not Selected ", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @RequiresApi(api = VERSION_CODES.Q)
-    private Uri createCameraImage(){
-        ContentResolver resolver = getContentResolver();
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.Q){
-            uri = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
-        }else {
-            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
-        }
-        String imgName = String.valueOf(System.currentTimeMillis());
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME,imgName+".jpg");
-        contentValues.put(MediaStore.Images.Media.RELATIVE_PATH,"Pictures/"+"Forget/");
-        //        billImageEdit.setText(imageUri.toString());
-        return resolver.insert(uri,contentValues);
-    }
+//    @RequiresApi(api = VERSION_CODES.Q)
+//    private Uri createCameraImage(){
+//        ContentResolver resolver = getContentResolver();
+//        if (Build.VERSION.SDK_INT >= VERSION_CODES.Q){
+//            uri = MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL_PRIMARY);
+//        }else {
+//            uri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI;
+//        }
+//        String imgName = String.valueOf(System.currentTimeMillis());
+//        ContentValues contentValues = new ContentValues();
+//        contentValues.put(MediaStore.Images.Media.DISPLAY_NAME,imgName+".jpg");
+//        contentValues.put(MediaStore.Images.Media.RELATIVE_PATH,"Pictures/"+"Forget/");
+//        //        billImageEdit.setText(imageUri.toString());
+//        return resolver.insert(uri,contentValues);
+//    }
 
-    public void getImgPath() {
-        String[] largeFileProjection = { MediaStore.Images.ImageColumns._ID,
-                MediaStore.Images.ImageColumns.DATA };
-        String largeFileSort = MediaStore.Images.ImageColumns._ID + " DESC";
-        Cursor myCursor = this.managedQuery(
-                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                largeFileProjection, null, null, largeFileSort);
-        String largeImagePath;
-        try {
-            myCursor.moveToFirst();
-            largeImagePath = myCursor
-                    .getString(myCursor
-                            .getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
-        } finally {
-            myCursor.close();
-        }
-        billImageEdittext.setHint(largeImagePath);
-    }
+//    public void getImgPath() {
+//        String[] largeFileProjection = { MediaStore.Images.ImageColumns._ID,
+//                MediaStore.Images.ImageColumns.DATA };
+//        String largeFileSort = MediaStore.Images.ImageColumns._ID + " DESC";
+//        Cursor myCursor = this.managedQuery(
+//                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+//                largeFileProjection, null, null, largeFileSort);
+//        String largeImagePath;
+//        try {
+//            myCursor.moveToFirst();
+//            largeImagePath = myCursor
+//                    .getString(myCursor
+//                            .getColumnIndexOrThrow(MediaStore.Images.ImageColumns.DATA));
+//        } finally {
+//            myCursor.close();
+//        }
+//        billImageEdittext.setHint(largeImagePath);
+//    }
 
-    private void saveImageToGallery(Bitmap finalBitmap) {
-        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
-        Form.this.sendBroadcast(new Intent(
-                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
-                .parse("file://" + root)));
-        File myDir = new File(root + "/Forget");
-        myDir.mkdirs();
-        Random generator = new Random();
-        int n = 10000;
-        n = generator.nextInt(n);
-        String fName = "Image-" + n + ".jpg";
-        File file = new File(myDir, fName);
-        if (file.exists())
-            file.delete();
-            file.delete();
-            file.delete();
-        try {
-            FileOutputStream out = new FileOutputStream(file);
-            galleryImagePath = file.getPath();
-            billImageEdittext.setHint(galleryImagePath);
-            //Log.d("TAG",gPath);
-            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+//    private void saveImageToGallery(Bitmap finalBitmap) {
+//        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+//        Form.this.sendBroadcast(new Intent(
+//                Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri
+//                .parse("file://" + root)));
+//        File myDir = new File(root + "/Forget");
+//        myDir.mkdirs();
+//        Random generator = new Random();
+//        int n = 10000;
+//        n = generator.nextInt(n);
+//        String fName = "Image-" + n + ".jpg";
+//        File file = new File(myDir, fName);
+//        if (file.exists())
+//            file.delete();
+//            file.delete();
+//            file.delete();
+//        try {
+//            FileOutputStream out = new FileOutputStream(file);
+//            galleryImagePath = file.getPath();
+//            billImageEdittext.setHint(galleryImagePath);
+//            //Log.d("TAG",gPath);
+//            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+//            out.flush();
+//            out.close();
+//        }
+//        catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }
 

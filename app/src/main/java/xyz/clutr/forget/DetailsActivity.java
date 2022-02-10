@@ -10,11 +10,14 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.File;
+
 public class DetailsActivity extends AppCompatActivity {
 
     View viewBackDetails;
     TextView itemName,itemLocation,itemDate,itemDescription;
     ImageView itemImageView;
+    Bitmap bmImg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,15 @@ public class DetailsActivity extends AppCompatActivity {
         //setting received data to views
         itemName.setText(receivedName);
         itemLocation.setText("Location : "+receivedLocation);
-        Bitmap bmImg = BitmapFactory.decodeFile(receivedImage);
+
+        if (receivedImage.endsWith(".pdf"))
+        {
+            bmImg  = AccessStorage.pdfToBitmap(new File(receivedImage));
+        }
+        else if (receivedImage.endsWith(".jpg")){
+            bmImg = BitmapFactory.decodeFile(receivedImage);
+        }
+
         itemImageView.setImageBitmap(bmImg);
         itemDescription.setText(receivedDescription);
         itemDate.setText(receivedDate);

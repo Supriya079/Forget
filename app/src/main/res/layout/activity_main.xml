@@ -21,7 +21,7 @@
         <View
             android:id="@+id/viewDashboardBack"
             android:layout_width="15dp"
-            android:layout_height="17dp"
+            android:layout_height="18dp"
             android:background="@drawable/ic_back_arrow"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

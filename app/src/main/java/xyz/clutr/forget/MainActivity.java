@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         cardDocuments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MyStuff.class);
+                Intent i = new Intent(getApplicationContext(), Documents.class);
                 startActivity(i);
             }
         });

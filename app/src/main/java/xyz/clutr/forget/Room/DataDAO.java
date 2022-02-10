@@ -9,8 +9,9 @@ import androidx.room.Update;
 import java.util.List;
 
 @Dao
-public interface BillDAO {
+public interface DataDAO {
 
+    //Bill DAO Methods
     @Query("SELECT * FROM BILLENTITY")
     List<BillEntity> getAllBills();
 
@@ -22,5 +23,18 @@ public interface BillDAO {
 
     @Delete
     void deleteBill(BillEntity billEntity);
+
+    //Documents DAO Methods
+    @Query("SELECT * FROM DOCUMENTENTITY")
+    List<DocumentEntity> getAllDocuments();
+
+    @Insert
+    void insertDocument(DocumentEntity documentEntity);
+
+    @Update
+    void updateDocument(DocumentEntity documentEntity);
+
+    @Delete
+    void deleteDocument(DocumentEntity documentEntity);
 
 }
