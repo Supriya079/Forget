@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         viewDashboardBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                finishAffinity();
             }
         });
 

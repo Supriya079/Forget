@@ -68,6 +68,7 @@ public class Documents extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), Form.class);
+                i.putExtra("category","Documents" );
                 startActivity(i);
             }
         });

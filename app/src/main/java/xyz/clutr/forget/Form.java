@@ -88,6 +88,12 @@ public class Form extends AppCompatActivity {
 
         dao = ForgetDB.getBillDBInstance(getApplicationContext()).dataDAO();
 
+        Intent intent = getIntent();
+        String receivedCategory =  intent.getStringExtra("category");
+        if (receivedCategory != null){
+            autoCompleteTextView.setText(receivedCategory);
+        }
+
         doneBtn.setOnClickListener(v -> {
             if(autoCompleteTextView.getText().toString().trim().equals(strings[0])){
                 //Bills
